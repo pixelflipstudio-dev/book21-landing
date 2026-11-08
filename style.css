@@ -70,11 +70,14 @@ h1 { font-size: clamp(2.4rem, 5.4vw, 4.4rem); line-height: 1.04; letter-spacing:
 .phone { margin: 0; width: min(300px, 72vw); aspect-ratio: 9 / 19.5; border-radius: 46px; padding: 11px; background: linear-gradient(145deg, #2a2f2c, #0b0d0c 40%, #1d211f); box-shadow: 0 0 0 1.5px #3a403c, 0 40px 80px -20px rgba(0,0,0,0.85), 0 0 120px rgba(110,231,183,0.12); position: relative; z-index: 2; animation: float 7s ease-in-out infinite, rise 0.9s 0.15s ease-out both; }
 .phone::before { content: ''; position: absolute; top: 20px; left: 50%; translate: -50% 0; width: 32%; height: 24px; border-radius: 20px; background: #000; z-index: 3; }
 .screen { position: relative; width: 100%; height: 100%; border-radius: 36px; overflow: hidden; background: var(--room); }
-.screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; animation: screens 16s infinite; }
+.screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; animation: screens 28s infinite; }
 .screen img:nth-child(1) { animation-delay: 0s; }
 .screen img:nth-child(2) { animation-delay: 4s; }
 .screen img:nth-child(3) { animation-delay: 8s; }
 .screen img:nth-child(4) { animation-delay: 12s; }
+.screen img:nth-child(5) { animation-delay: 16s; }
+.screen img:nth-child(6) { animation-delay: 20s; }
+.screen img:nth-child(7) { animation-delay: 24s; }
 
 .cards { position: absolute; left: -2%; top: 16%; z-index: 3; }
 .card { position: absolute; width: 96px; height: 134px; border-radius: 10px; background: var(--card); color: var(--card-black); fill: currentColor; border: 1px solid var(--card-rim); box-shadow: 0 10px 24px rgba(0,0,0,0.55); display: grid; place-items: center; font-family: var(--serif); }
@@ -123,7 +126,7 @@ footer .small { font-size: 0.8rem; opacity: 0.8; }
 /* ---------- Motion ---------- */
 @keyframes rise { from { opacity: 0; translate: 0 24px; } to { opacity: 1; translate: 0 0; } }
 @keyframes float { 0%, 100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-14px) rotate(-0.5deg); } }
-@keyframes screens { 0% { opacity: 0; scale: 1.04; } 4%, 25% { opacity: 1; scale: 1; } 30%, 100% { opacity: 0; } }
+@keyframes screens { 0% { opacity: 0; scale: 1.04; } 2.5%, 14.3% { opacity: 1; scale: 1; } 17%, 100% { opacity: 0; } }
 @keyframes deal1 { from { opacity: 0; transform: translate(420px, -320px) rotate(40deg); } to { opacity: 1; transform: none; } }
 @keyframes deal2 { from { opacity: 0; transform: translate(380px, -300px) rotate(60deg); } to { opacity: 1; transform: none; } }
 @keyframes pop { from { opacity: 0; scale: 0.6; } to { opacity: 1; scale: 1; } }
@@ -193,4 +196,8 @@ footer .small { font-size: 0.8rem; opacity: 0.8; }
 @media (max-width: 860px) {
   .book { grid-template-columns: 1fr; text-align: center; padding: 40px 0; gap: 28px; }
   .book-copy > p { margin-inline: auto; }
+}
+@media (min-width: 861px) {
+  .book.flip { grid-template-columns: 1.1fr 0.9fr; }
+  .book.flip .duo { order: -1; }
 }
