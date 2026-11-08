@@ -19,11 +19,82 @@
     <meta property="og:image" content="https://book21.app/img/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Book 21, blackjack coach. Walk up to the table knowing the right play." />
+    <meta
+      property="og:image:alt"
+      content="Book 21, blackjack coach. Walk up to the table knowing the right play."
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#01120B" />
     <link rel="icon" href="/img/icon.png" />
     <link rel="stylesheet" href="/style.css" />
+    <script>
+      // Anonymous visit counts (PostHog, cookie-free; see the privacy policy). Page views and store
+      // button taps only: no cookies, no autocapture, no recordings.
+      !(function (t, e) {
+        var o, n, p, r;
+        e.__SV ||
+          ((window.posthog = e),
+          (e._i = []),
+          (e.init = function (i, s, a) {
+            function g(t, e) {
+              var o = e.split('.');
+              (2 == o.length && ((t = t[o[0]]), (e = o[1])),
+                (t[e] = function () {
+                  t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
+                }));
+            }
+            (((p = t.createElement('script')).type = 'text/javascript'),
+              (p.crossOrigin = 'anonymous'),
+              (p.async = !0),
+              (p.src =
+                s.api_host.replace('.i.posthog.com', '-assets.i.posthog.com') + '/static/array.js'),
+              (r = t.getElementsByTagName('script')[0]).parentNode.insertBefore(p, r));
+            var u = e;
+            for (
+              void 0 !== a ? (u = e[a] = []) : (a = 'posthog'),
+                u.people = u.people || [],
+                u.toString = function (t) {
+                  var e = 'posthog';
+                  return ('posthog' !== a && (e += '.' + a), t || (e += ' (stub)'), e);
+                },
+                u.people.toString = function () {
+                  return u.toString(1) + '.people (stub)';
+                },
+                o =
+                  'init capture register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset'.split(
+                    ' ',
+                  ),
+                n = 0;
+              n < o.length;
+              n++
+            )
+              g(u, o[n]);
+            e._i.push([i, s, a]);
+          }),
+          (e.__SV = 1));
+      })(document, window.posthog || []);
+      posthog.init('phc_mV7HLrqPuNQdKU54S8QXbx3kieAXcYYZq7YCkUEQfiHW', {
+        api_host: 'https://us.i.posthog.com',
+        persistence: 'memory',
+        person_profiles: 'identified_only',
+        autocapture: false,
+        capture_pageview: true,
+        capture_pageleave: false,
+        disable_session_recording: true,
+        disable_surveys: true,
+      });
+      posthog.register({ site: 'book21.app' });
+      document.addEventListener('click', (e) => {
+        const a = e.target.closest('.store');
+        if (!a) return;
+        const section = a.closest('section') ? 'final' : 'hero';
+        posthog.capture('store_tapped', {
+          store: /Google/.test(a.textContent) ? 'google_play' : 'app_store',
+          section,
+          live: a.getAttribute('aria-disabled') !== 'true',
+        });
+      });
+    </script>
   </head>
   <body>
     <header class="hero">
@@ -41,36 +112,100 @@
           <p class="eyebrow">Blackjack coach</p>
           <h1>Walk up to the table knowing the right play.</h1>
           <p class="lede">
-            Play real hands at a real table. Book 21 grades every decision against the book for
-            your table's exact rules, and tells you why in plain words.
+            Play real hands at a real table. Book 21 grades every decision against the book for your
+            table's exact rules, and tells you why in plain words.
           </p>
           <div class="stores" id="get">
-            <a class="store" aria-disabled="true" aria-label="Download on the App Store, coming soon">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9s-2-.9-3.3-.9C6.1 7 4.5 8 3.7 9.6c-1.8 3.1-.5 7.7 1.3 10.2.8 1.2 1.8 2.6 3.1 2.5 1.3 0 1.7-.8 3.3-.8s2 .8 3.3.8c1.4 0 2.2-1.2 3-2.5.9-1.4 1.3-2.7 1.3-2.8 0 0-2.6-1-2.6-4.4ZM14 5.3c.7-.8 1.2-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4Z"/></svg>
+            <a
+              class="store"
+              aria-disabled="true"
+              aria-label="Download on the App Store, coming soon"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9s-2-.9-3.3-.9C6.1 7 4.5 8 3.7 9.6c-1.8 3.1-.5 7.7 1.3 10.2.8 1.2 1.8 2.6 3.1 2.5 1.3 0 1.7-.8 3.3-.8s2 .8 3.3.8c1.4 0 2.2-1.2 3-2.5.9-1.4 1.3-2.7 1.3-2.8 0 0-2.6-1-2.6-4.4ZM14 5.3c.7-.8 1.2-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4Z"
+                />
+              </svg>
               <span><small>Download on the</small>App Store</span>
             </a>
             <a class="store" aria-disabled="true" aria-label="Get it on Google Play, coming soon">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 1.8 13.5 12l-9.9 10.2c-.4-.2-.6-.7-.6-1.2V3c0-.5.2-.9.6-1.2Zm11 11.3 2.6 2.6-11.6 6.6 9-9.2Zm3.9-3.8 2.8 1.6c.9.5.9 1.8 0 2.3l-2.9 1.7-2.8-2.9 2.9-2.7ZM5.6 1.7l11.6 6.6-2.6 2.6-9-9.2Z"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M3.6 1.8 13.5 12l-9.9 10.2c-.4-.2-.6-.7-.6-1.2V3c0-.5.2-.9.6-1.2Zm11 11.3 2.6 2.6-11.6 6.6 9-9.2Zm3.9-3.8 2.8 1.6c.9.5.9 1.8 0 2.3l-2.9 1.7-2.8-2.9 2.9-2.7ZM5.6 1.7l11.6 6.6-2.6 2.6-9-9.2Z"
+                />
+              </svg>
               <span><small>Get it on</small>Google Play</span>
             </a>
           </div>
-          <p class="soon">Coming soon to iPhone and Android. Free to start, and never real money.</p>
+          <p class="soon">
+            Coming soon to iPhone and Android. Free to start, and never real money.
+          </p>
         </div>
 
         <div class="hero-phone">
           <div class="cards" aria-hidden="true">
-            <div class="card c1"><span class="ix">A<svg viewBox="0 0 24 24"><path d="M12 2.5S3.5 8.6 3.5 13.4c0 2.5 2 4.4 4.4 4.4 1.3 0 2.4-.5 3.2-1.4-.3 1.8-1.1 3.4-2.6 4.6h7c-1.5-1.2-2.3-2.8-2.6-4.6.8.9 1.9 1.4 3.2 1.4 2.4 0 4.4-1.9 4.4-4.4C20.5 8.6 12 2.5 12 2.5z"/></svg></span><svg class="pip" viewBox="0 0 24 24"><path d="M12 2.5S3.5 8.6 3.5 13.4c0 2.5 2 4.4 4.4 4.4 1.3 0 2.4-.5 3.2-1.4-.3 1.8-1.1 3.4-2.6 4.6h7c-1.5-1.2-2.3-2.8-2.6-4.6.8.9 1.9 1.4 3.2 1.4 2.4 0 4.4-1.9 4.4-4.4C20.5 8.6 12 2.5 12 2.5z"/></svg><span class="ix flip">A<svg viewBox="0 0 24 24"><path d="M12 2.5S3.5 8.6 3.5 13.4c0 2.5 2 4.4 4.4 4.4 1.3 0 2.4-.5 3.2-1.4-.3 1.8-1.1 3.4-2.6 4.6h7c-1.5-1.2-2.3-2.8-2.6-4.6.8.9 1.9 1.4 3.2 1.4 2.4 0 4.4-1.9 4.4-4.4C20.5 8.6 12 2.5 12 2.5z"/></svg></span></div>
-            <div class="card c2 red"><span class="ix">7<svg viewBox="0 0 24 24"><path d="M12 21.5S3 15.8 3 9.6C3 6.5 5.4 4 8.3 4c1.6 0 3 .8 3.7 2.1C12.7 4.8 14.1 4 15.7 4 18.6 4 21 6.5 21 9.6c0 6.2-9 11.9-9 11.9z"/></svg></span><svg class="pip" viewBox="0 0 24 24"><path d="M12 21.5S3 15.8 3 9.6C3 6.5 5.4 4 8.3 4c1.6 0 3 .8 3.7 2.1C12.7 4.8 14.1 4 15.7 4 18.6 4 21 6.5 21 9.6c0 6.2-9 11.9-9 11.9z"/></svg><span class="ix flip">7<svg viewBox="0 0 24 24"><path d="M12 21.5S3 15.8 3 9.6C3 6.5 5.4 4 8.3 4c1.6 0 3 .8 3.7 2.1C12.7 4.8 14.1 4 15.7 4 18.6 4 21 6.5 21 9.6c0 6.2-9 11.9-9 11.9z"/></svg></span></div>
+            <div class="card c1">
+              <span class="ix"
+                >A<svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2.5S3.5 8.6 3.5 13.4c0 2.5 2 4.4 4.4 4.4 1.3 0 2.4-.5 3.2-1.4-.3 1.8-1.1 3.4-2.6 4.6h7c-1.5-1.2-2.3-2.8-2.6-4.6.8.9 1.9 1.4 3.2 1.4 2.4 0 4.4-1.9 4.4-4.4C20.5 8.6 12 2.5 12 2.5z"
+                  /></svg></span
+              ><svg class="pip" viewBox="0 0 24 24">
+                <path
+                  d="M12 2.5S3.5 8.6 3.5 13.4c0 2.5 2 4.4 4.4 4.4 1.3 0 2.4-.5 3.2-1.4-.3 1.8-1.1 3.4-2.6 4.6h7c-1.5-1.2-2.3-2.8-2.6-4.6.8.9 1.9 1.4 3.2 1.4 2.4 0 4.4-1.9 4.4-4.4C20.5 8.6 12 2.5 12 2.5z"
+                /></svg
+              ><span class="ix flip"
+                >A<svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2.5S3.5 8.6 3.5 13.4c0 2.5 2 4.4 4.4 4.4 1.3 0 2.4-.5 3.2-1.4-.3 1.8-1.1 3.4-2.6 4.6h7c-1.5-1.2-2.3-2.8-2.6-4.6.8.9 1.9 1.4 3.2 1.4 2.4 0 4.4-1.9 4.4-4.4C20.5 8.6 12 2.5 12 2.5z"
+                  /></svg
+              ></span>
+            </div>
+            <div class="card c2 red">
+              <span class="ix"
+                >7<svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 21.5S3 15.8 3 9.6C3 6.5 5.4 4 8.3 4c1.6 0 3 .8 3.7 2.1C12.7 4.8 14.1 4 15.7 4 18.6 4 21 6.5 21 9.6c0 6.2-9 11.9-9 11.9z"
+                  /></svg></span
+              ><svg class="pip" viewBox="0 0 24 24">
+                <path
+                  d="M12 21.5S3 15.8 3 9.6C3 6.5 5.4 4 8.3 4c1.6 0 3 .8 3.7 2.1C12.7 4.8 14.1 4 15.7 4 18.6 4 21 6.5 21 9.6c0 6.2-9 11.9-9 11.9z"
+                /></svg
+              ><span class="ix flip"
+                >7<svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 21.5S3 15.8 3 9.6C3 6.5 5.4 4 8.3 4c1.6 0 3 .8 3.7 2.1C12.7 4.8 14.1 4 15.7 4 18.6 4 21 6.5 21 9.6c0 6.2-9 11.9-9 11.9z"
+                  /></svg
+              ></span>
+            </div>
           </div>
           <div class="call" aria-hidden="true"><span>✓</span> The book says Hit</div>
           <figure class="phone" aria-label="Book 21 on an iPhone">
             <div class="screen">
-              <img src="/img/table-decision.webp" alt="Your turn at the table, holding hard 16 against a dealer 10" />
-              <img src="/img/table-notes-chart.webp" alt="What the book says at the table: the chart opens over the hand, hard 16 against a 10 is Hit" />
-              <img src="/img/chart-grid.webp" alt="The full hard hands chart for this table, with hard 16 against a 10 lit up" />
-              <img src="/img/odds-hand.webp" alt="The coach on hard 12 against a 7: the book hits, and the chart shows where the dealer finishes" />
-              <img src="/img/hand-review.webp" alt="The coach explains a stand on 12 against a 7, where the book hits" />
-              <img src="/img/drills-run.webp" alt="A drill, hard 11 against a 9, graded by the book" />
+              <img
+                src="/img/table-decision.webp"
+                alt="Your turn at the table, holding hard 16 against a dealer 10"
+              />
+              <img
+                src="/img/table-notes-chart.webp"
+                alt="What the book says at the table: the chart opens over the hand, hard 16 against a 10 is Hit"
+              />
+              <img
+                src="/img/chart-grid.webp"
+                alt="The full hard hands chart for this table, with hard 16 against a 10 lit up"
+              />
+              <img
+                src="/img/odds-hand.webp"
+                alt="The coach on hard 12 against a 7: the book hits, and the chart shows where the dealer finishes"
+              />
+              <img
+                src="/img/hand-review.webp"
+                alt="The coach explains a stand on 12 against a 7, where the book hits"
+              />
+              <img
+                src="/img/drills-run.webp"
+                alt="A drill, hard 11 against a 9, graded by the book"
+              />
               <img src="/img/celebrate-streak-25.webp" alt="25 decisions in a row by the book" />
             </div>
           </figure>
@@ -90,14 +225,18 @@
       </section>
 
       <section class="reveal trip">
-        <img class="trip-art" src="/img/trip.svg" alt="A city skyline at night and a cruise ship at sea, joined by a dotted route" />
+        <img
+          class="trip-art"
+          src="/img/trip.svg"
+          alt="A city skyline at night and a cruise ship at sea, joined by a dotted route"
+        />
         <div class="trip-copy">
           <p class="mono">Got a trip coming up?</p>
           <h2>Vegas this spring. A cruise in June. Get table-ready before you go.</h2>
           <p>
-            Set your destination and your date, and Book 21 sets up the exact rules you'll find there.
-            It counts down the days, shows how table-ready you are, and on the day itself it hands
-            you the few plays that cover the most hands.
+            Set your destination and your date, and Book 21 sets up the exact rules you'll find
+            there. It counts down the days, shows how table-ready you are, and on the day itself it
+            hands you the few plays that cover the most hands.
           </p>
           <ul class="ticks">
             <li>Tables for the Las Vegas Strip, cruise ships and more</li>
@@ -107,33 +246,53 @@
           <p class="aside">No trip planned? It's just as good for a regular night out.</p>
         </div>
         <div class="duo">
-          <div class="shot"><img src="/img/home-trip-day.webp" alt="Trip day for the Las Vegas Strip, with the few plays that cover the most hands" loading="lazy" /></div>
-          <div class="shot"><img src="/img/shell-trip.webp" alt="The trip budget, showing two hours at $10 a hand costs about $7.43 on average" loading="lazy" /></div>
+          <div class="shot">
+            <img
+              src="/img/home-trip-day.webp"
+              alt="Trip day for the Las Vegas Strip, with the few plays that cover the most hands"
+              loading="lazy"
+            />
+          </div>
+          <div class="shot">
+            <img
+              src="/img/shell-trip.webp"
+              alt="The trip budget, showing two hours at $10 a hand costs about $7.43 on average"
+              loading="lazy"
+            />
+          </div>
         </div>
       </section>
 
       <section class="reveal feature">
-        <div class="shot"><img src="/img/table-decision.webp" alt="A full table with other players in the seats" loading="lazy" /></div>
+        <div class="shot">
+          <img
+            src="/img/table-decision.webp"
+            alt="A full table with other players in the seats"
+            loading="lazy"
+          />
+        </div>
         <div class="feature-copy">
           <p class="mono">A real table</p>
           <h3>Full hands from a real shoe.</h3>
           <p>
-            Other players fill the seats, the dealer checks for blackjack, and the shoe runs
-            down like it does in the casino. Pick the rules on your cruise ship or in Vegas and
-            practice that exact game.
+            Other players fill the seats, the dealer checks for blackjack, and the shoe runs down
+            like it does in the casino. Pick the rules on your cruise ship or in Vegas and practice
+            that exact game.
           </p>
         </div>
       </section>
 
       <section class="reveal feature flip">
-        <div class="shot"><img src="/img/hand-review.webp" alt="The coach's note on a hand" loading="lazy" /></div>
+        <div class="shot">
+          <img src="/img/hand-review.webp" alt="The coach's note on a hand" loading="lazy" />
+        </div>
         <div class="feature-copy">
           <p class="mono">A coach on every decision</p>
           <h3>Graded on the call, never the cards.</h3>
           <p>
-            A right play that loses is still right. The coach tells you what the book says, why,
-            and what the other play would have cost you over the long run. A miss is just a spot
-            to practice.
+            A right play that loses is still right. The coach tells you what the book says, why, and
+            what the other play would have cost you over the long run. A miss is just a spot to
+            practice.
           </p>
         </div>
       </section>
@@ -153,8 +312,20 @@
           </p>
         </div>
         <div class="duo">
-          <div class="shot"><img src="/img/odds-worth.webp" alt="Hard 12 against a 7 on a $25 bet: hitting is worth -$5.32, standing -$11.88 and doubling -$12.67" loading="lazy" /></div>
-          <div class="shot"><img src="/img/shoe-review.webp" alt="A shoe review: standing on 12 against a 7 loses $11.88 on average, hitting saves $6.56" loading="lazy" /></div>
+          <div class="shot">
+            <img
+              src="/img/odds-worth.webp"
+              alt="Hard 12 against a 7 on a $25 bet: hitting is worth -$5.32, standing -$11.88 and doubling -$12.67"
+              loading="lazy"
+            />
+          </div>
+          <div class="shot">
+            <img
+              src="/img/shoe-review.webp"
+              alt="A shoe review: standing on 12 against a 7 loses $11.88 on average, hitting saves $6.56"
+              loading="lazy"
+            />
+          </div>
         </div>
       </section>
 
@@ -163,9 +334,9 @@
           <p class="mono">What the book says</p>
           <h2>The whole chart for your exact table.</h2>
           <p>
-            Six decks or one, dealer hits or stands on soft 17, surrender or not. The chart changes with
-            the rules, and Book 21 always shows the one for your table. Your hand lights up, with the
-            reason in plain words.
+            Six decks or one, dealer hits or stands on soft 17, surrender or not. The chart changes
+            with the rules, and Book 21 always shows the one for your table. Your hand lights up,
+            with the reason in plain words.
           </p>
           <ul class="ticks">
             <li>Hard hands, soft hands and pairs, every square</li>
@@ -174,8 +345,20 @@
           </ul>
         </div>
         <div class="duo">
-          <div class="shot"><img src="/img/chart-grid.webp" alt="The hard hands chart for a six-deck table, with hard 16 against a dealer 10 lit up as Hit" loading="lazy" /></div>
-          <div class="shot"><img src="/img/chart-pairs.webp" alt="The soft hands and pairs charts, colored by hit, stand, double and split" loading="lazy" /></div>
+          <div class="shot">
+            <img
+              src="/img/chart-grid.webp"
+              alt="The hard hands chart for a six-deck table, with hard 16 against a dealer 10 lit up as Hit"
+              loading="lazy"
+            />
+          </div>
+          <div class="shot">
+            <img
+              src="/img/chart-pairs.webp"
+              alt="The soft hands and pairs charts, colored by hit, stand, double and split"
+              loading="lazy"
+            />
+          </div>
         </div>
       </section>
 
@@ -184,8 +367,8 @@
           <p class="mono">Drills</p>
           <h2>Make the play. Find the slip. Add it up.</h2>
           <p>
-            Fast drills for the hands that trip people up. Make the call on tricky totals, soft hands
-            and pairs, and keep count of the cards.
+            Fast drills for the hands that trip people up. Make the call on tricky totals, soft
+            hands and pairs, and keep count of the cards.
           </p>
           <p>
             In the film room, a hand plays out step by step. Somewhere a player went off the book,
@@ -193,19 +376,37 @@
           </p>
         </div>
         <div class="duo">
-          <div class="shot"><img src="/img/drills-run.webp" alt="A Your call drill: hard 11 against a 9, graded by the book" loading="lazy" /></div>
-          <div class="shot"><img src="/img/drills-film.webp" alt="The film room: against a dealer 4, a player hit hard 12. Spotted it, the book stands on 12 against 4 to 6." loading="lazy" /></div>
+          <div class="shot">
+            <img
+              src="/img/drills-run.webp"
+              alt="A Your call drill: hard 11 against a 9, graded by the book"
+              loading="lazy"
+            />
+          </div>
+          <div class="shot">
+            <img
+              src="/img/drills-film.webp"
+              alt="The film room: against a dealer 4, a player hit hard 12. Spotted it, the book stands on 12 against 4 to 6."
+              loading="lazy"
+            />
+          </div>
         </div>
       </section>
 
       <section class="reveal feature flip">
-        <div class="shot"><img src="/img/celebrate-streak-25.webp" alt="A streak of 25 decisions by the book" loading="lazy" /></div>
+        <div class="shot">
+          <img
+            src="/img/celebrate-streak-25.webp"
+            alt="A streak of 25 decisions by the book"
+            loading="lazy"
+          />
+        </div>
         <div class="feature-copy">
           <p class="mono">Progress you earn</p>
           <h3>Streaks and badges for playing it right.</h3>
           <p>
-            Rewards come from good decisions only. Never from winning, betting big or luck. Get
-            to 25 in a row by the book and the dealer starts to notice.
+            Rewards come from good decisions only. Never from winning, betting big or luck. Get to
+            25 in a row by the book and the dealer starts to notice.
           </p>
         </div>
       </section>
@@ -220,11 +421,19 @@
         <p>Free to start. No real money, no chips to buy, ever.</p>
         <div class="stores">
           <a class="store" aria-disabled="true" aria-label="Download on the App Store, coming soon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9s-2-.9-3.3-.9C6.1 7 4.5 8 3.7 9.6c-1.8 3.1-.5 7.7 1.3 10.2.8 1.2 1.8 2.6 3.1 2.5 1.3 0 1.7-.8 3.3-.8s2 .8 3.3.8c1.4 0 2.2-1.2 3-2.5.9-1.4 1.3-2.7 1.3-2.8 0 0-2.6-1-2.6-4.4ZM14 5.3c.7-.8 1.2-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4Z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9s-2-.9-3.3-.9C6.1 7 4.5 8 3.7 9.6c-1.8 3.1-.5 7.7 1.3 10.2.8 1.2 1.8 2.6 3.1 2.5 1.3 0 1.7-.8 3.3-.8s2 .8 3.3.8c1.4 0 2.2-1.2 3-2.5.9-1.4 1.3-2.7 1.3-2.8 0 0-2.6-1-2.6-4.4ZM14 5.3c.7-.8 1.2-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4Z"
+              />
+            </svg>
             <span><small>Download on the</small>App Store</span>
           </a>
           <a class="store" aria-disabled="true" aria-label="Get it on Google Play, coming soon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 1.8 13.5 12l-9.9 10.2c-.4-.2-.6-.7-.6-1.2V3c0-.5.2-.9.6-1.2Zm11 11.3 2.6 2.6-11.6 6.6 9-9.2Zm3.9-3.8 2.8 1.6c.9.5.9 1.8 0 2.3l-2.9 1.7-2.8-2.9 2.9-2.7ZM5.6 1.7l11.6 6.6-2.6 2.6-9-9.2Z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M3.6 1.8 13.5 12l-9.9 10.2c-.4-.2-.6-.7-.6-1.2V3c0-.5.2-.9.6-1.2Zm11 11.3 2.6 2.6-11.6 6.6 9-9.2Zm3.9-3.8 2.8 1.6c.9.5.9 1.8 0 2.3l-2.9 1.7-2.8-2.9 2.9-2.7ZM5.6 1.7l11.6 6.6-2.6 2.6-9-9.2Z"
+              />
+            </svg>
             <span><small>Get it on</small>Google Play</span>
           </a>
         </div>
@@ -245,9 +454,16 @@
       (() => {
         const els = document.querySelectorAll('.reveal');
         if (!('IntersectionObserver' in window)) return els.forEach((e) => e.classList.add('in'));
-        const io = new IntersectionObserver((entries) => {
-          for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-        }, { threshold: 0.15 });
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries)
+              if (e.isIntersecting) {
+                e.target.classList.add('in');
+                io.unobserve(e.target);
+              }
+          },
+          { threshold: 0.15 },
+        );
         els.forEach((e) => io.observe(e));
       })();
     </script>
