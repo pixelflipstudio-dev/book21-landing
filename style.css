@@ -843,3 +843,73 @@ footer .small {
     order: -1;
   }
 }
+
+/* The trip section (2026-11-08): the friends at the table on the right, the two phones rising up
+   over the table's front edge once the section is in view. */
+.trip {
+  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-areas: 'copy stage';
+}
+.trip-copy {
+  grid-area: copy;
+}
+.trip-stage {
+  grid-area: stage;
+  position: relative;
+  min-width: 0;
+  padding-bottom: 8px;
+}
+.trip-stage .trip-art {
+  display: block;
+  width: 100%;
+  border-radius: 0;
+  box-shadow: none;
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.6));
+}
+.trip .trip-stage .duo {
+  grid-area: auto;
+  position: relative;
+  margin-top: -10px;
+  gap: 22px;
+}
+.trip-stage .duo .shot {
+  width: min(190px, 16vw);
+}
+.trip-stage .duo .shot:nth-child(2) {
+  translate: 0 28px;
+}
+.trip.reveal .trip-stage .duo .shot {
+  opacity: 0;
+  transform: translateY(90px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.trip.reveal.in .trip-stage .duo .shot {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.35s;
+}
+.trip.reveal.in .trip-stage .duo .shot:nth-child(2) {
+  transition-delay: 0.55s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .trip.reveal .trip-stage .duo .shot {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+@media (max-width: 860px) {
+  .trip {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'copy' 'stage';
+  }
+  .trip .trip-stage .duo {
+    margin-top: -6px;
+    gap: 12px;
+  }
+  .trip-stage .duo .shot {
+    width: min(160px, 40vw);
+  }
+}
