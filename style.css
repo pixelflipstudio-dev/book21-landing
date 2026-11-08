@@ -869,14 +869,14 @@ footer .small {
 .trip .trip-stage .duo {
   grid-area: auto;
   position: relative;
-  margin-top: -10px;
+  margin-top: -28px;
   gap: 22px;
 }
 .trip-stage .duo .shot {
   width: min(190px, 16vw);
 }
 .trip-stage .duo .shot:nth-child(2) {
-  translate: 0 28px;
+  translate: 0 12px;
 }
 .trip.reveal .trip-stage .duo .shot {
   opacity: 0;
@@ -906,7 +906,7 @@ footer .small {
     grid-template-areas: 'copy' 'stage';
   }
   .trip .trip-stage .duo {
-    margin-top: -6px;
+    margin-top: -24px;
     gap: 12px;
   }
   .trip-stage .duo .shot {
