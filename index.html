@@ -109,6 +109,13 @@
 
       <div class="hero-grid">
         <div class="hero-copy">
+          <p class="founding" id="founding-banner" hidden>
+            <span class="founding-kicker" id="founding-kicker">Founding month</span>
+            <span id="founding-line"
+              >Install by Cyber Monday and Book 21 Pro is yours, free for good.</span
+            >
+            <span class="founding-count" id="founding-count"></span>
+          </p>
           <p class="eyebrow">Blackjack coach</p>
           <h1>Walk up to the table knowing the right play.</h1>
           <p class="lede">
@@ -422,6 +429,9 @@
       <section class="reveal final">
         <h2>Your next trip starts at the practice table.</h2>
         <p>Free to start. No real money, no chips to buy, ever.</p>
+        <p class="founding-note" id="founding-note" hidden>
+          Founding players keep Book 21 Pro free for good. After Cyber Monday, Pro is $29.99 a year.
+        </p>
         <div class="stores">
           <a class="store" aria-disabled="true" aria-label="Download on the App Store, coming soon">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -452,6 +462,71 @@
       </p>
       <p class="small">© 2026 Pixel Flip Studio LLC</p>
     </footer>
+    <script>
+      // The founding offer (D-129): shown only while the window in /config.json is open (the same
+      // file the app reads), with the built-in dates if it can't be read. After Cyber Monday the
+      // page is the regular one. From Thanksgiving week the banner speaks of Black Friday.
+      (() => {
+        const BUILT_IN = {
+          launched: false,
+          foundingStart: '2026-11-09T00:00:00-05:00',
+          foundingEnd: '2026-11-30T23:59:59-05:00',
+        };
+        const BLACK_FRIDAY_WEEK = Date.parse('2026-11-23T00:00:00-05:00');
+        // ?at=2026-11-27 previews the page as of that date (for checking, harmless otherwise).
+        const at = Date.parse(new URLSearchParams(location.search).get('at') ?? '');
+        const offset = Number.isFinite(at) ? at - Date.now() : 0;
+        const clock = () => Date.now() + offset;
+        const show = (cfg) => {
+          const start = Date.parse(cfg.foundingStart);
+          const end = Date.parse(cfg.foundingEnd);
+          const now = clock();
+          // Store links go live from the file on launch day (until then the buttons say Soon).
+          if (cfg.appStoreUrl) {
+            for (const el of document.querySelectorAll('.store')) {
+              if (!/App Store/.test(el.textContent)) continue;
+              el.href = cfg.appStoreUrl;
+              el.removeAttribute('aria-disabled');
+              el.setAttribute('aria-label', 'Download on the App Store');
+            }
+          }
+          // The founding offer shows only once the app is live, and only inside the window.
+          if (cfg.launched !== true || !(now >= start && now <= end)) return;
+          const banner = document.getElementById('founding-banner');
+          banner.hidden = false;
+          document.getElementById('founding-note').hidden = false;
+          if (now >= BLACK_FRIDAY_WEEK) {
+            document.getElementById('founding-kicker').textContent = 'Black Friday';
+            document.getElementById('founding-line').textContent =
+              'Book 21 Pro, free for good, for everyone who installs by Cyber Monday.';
+          }
+          const count = document.getElementById('founding-count');
+          const tick = () => {
+            const left = end - clock();
+            if (left <= 0) {
+              banner.hidden = true;
+              document.getElementById('founding-note').hidden = true;
+              return;
+            }
+            const days = Math.floor(left / 86400000);
+            const hours = Math.floor(left / 3600000);
+            count.textContent =
+              days >= 2
+                ? `Ends in ${days} days`
+                : hours >= 2
+                  ? `Ends in ${hours} hours`
+                  : 'Ends tonight';
+          };
+          tick();
+          setInterval(tick, 60000);
+        };
+        fetch('/config.json', { cache: 'no-store' })
+          .then((r) => (r.ok ? r.json() : BUILT_IN))
+          .then((c) => (c && c.foundingStart && c.foundingEnd ? c : BUILT_IN))
+          .catch(() => BUILT_IN)
+          .then(show);
+      })();
+    </script>
     <script>
       // Sections rise in as they scroll into view. Without script they're simply shown.
       (() => {

@@ -913,3 +913,40 @@ footer .small {
     width: min(160px, 40vw);
   }
 }
+
+/* The founding offer (D-129): a gold-edged note above the hero, shown only in the window. */
+.founding {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border: 1px solid var(--gold);
+  border-radius: 14px;
+  background: rgba(252, 211, 77, 0.08);
+  color: #f5f0e1;
+  font-size: 1rem;
+  line-height: 1.4;
+  max-width: 34rem;
+}
+.founding-kicker {
+  font: 600 0.72rem/1.4 var(--mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.founding-count {
+  font: 600 0.8rem/1.4 var(--mono);
+  color: var(--gold);
+}
+.founding-note {
+  color: var(--gold);
+  font-size: 1rem;
+}
+@media (max-width: 860px) {
+  .founding {
+    margin-inline: auto;
+    text-align: left;
+  }
+}
