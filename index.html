@@ -511,7 +511,11 @@
         };
         const BLACK_FRIDAY_WEEK = Date.parse('2026-11-23T00:00:00-05:00');
         // ?at=2026-11-27 previews the page as of that date (for checking, harmless otherwise).
-        const at = Date.parse(new URLSearchParams(location.search).get('at') ?? '');
+        const params = new URLSearchParams(location.search);
+        const at = Date.parse(params.get('at') ?? '');
+        // ?preview=founders shows the founding offer as it will look once the app is live, before
+        // `launched` is on. The page only: the app reads config.json and never sees this.
+        const preview = params.get('preview') === 'founders';
         const offset = Number.isFinite(at) ? at - Date.now() : 0;
         const clock = () => Date.now() + offset;
         const show = (cfg) => {
@@ -527,8 +531,8 @@
               el.setAttribute('aria-label', 'Download on the App Store');
             }
           }
-          // The founding offer shows only once the app is live, and only inside the window.
-          if (cfg.launched !== true || !(now >= start && now <= end)) return;
+          // The founding offer shows only once the app is live (or in the preview), inside the window.
+          if ((cfg.launched !== true && !preview) || !(now >= start && now <= end)) return;
           const banner = document.getElementById('founding-banner');
           banner.hidden = false;
           document.getElementById('founding-note').hidden = false;
