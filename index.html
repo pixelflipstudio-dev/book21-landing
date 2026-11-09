@@ -221,6 +221,43 @@
     </header>
 
     <main>
+      <!-- The founders' table (S1 step 1d, D-130): shown with the founding banner, in the window. -->
+      <section class="founders" id="founders" hidden aria-labelledby="founders-title">
+        <div class="founders-copy">
+          <p class="founders-kicker" id="founders-kicker">Founding month · Ends Cyber Monday</p>
+          <h2 id="founders-title">Pull up a chair at the founders’ table</h2>
+          <p>
+            Download Book 21 by November 30 and you’re a founding player. Pro is yours for good,
+            with the gold chip to prove it.
+          </p>
+          <div class="founders-row" id="founders-row">
+            <span class="founders-count" id="founders-count"></span>
+          </div>
+        </div>
+        <div class="founders-art">
+          <!-- The app's own founding moment, recorded on an iPhone (S1 step 1d). -->
+          <figure
+            class="phone founders-phone"
+            role="img"
+            aria-label="Book 21 on an iPhone: the velvet rope opens, 21 cards turn gold around the gold founders’ chip, and the screen says Welcome to the founders’ table"
+          >
+            <div class="screen">
+              <video
+                id="founders-video"
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster="/img/founders-table.webp"
+                aria-hidden="true"
+              >
+                <source src="/img/founders-table.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </figure>
+        </div>
+      </section>
+
       <section class="reveal promise">
         <p class="mono">The book</p>
         <h2>Every hand has a right play. Most people at the table don't know it.</h2>
@@ -495,7 +532,31 @@
           const banner = document.getElementById('founding-banner');
           banner.hidden = false;
           document.getElementById('founding-note').hidden = false;
+          // The founders' table section: the App Store button cloned from the hero, then the moment,
+          // which plays while it's on screen. Reduced motion (and Low Power Mode, which refuses to
+          // play) keeps the poster, the finished table.
+          const founders = document.getElementById('founders');
+          founders.hidden = false;
+          const store = document.querySelector('#get .store');
+          if (store) document.getElementById('founders-row').prepend(store.cloneNode(true));
+          const video = document.getElementById('founders-video');
+          if (
+            !matchMedia('(prefers-reduced-motion: reduce)').matches &&
+            'IntersectionObserver' in window
+          ) {
+            video.preload = 'auto';
+            // A fifth of the phone on screen plays it: the phone is taller than a short window.
+            new IntersectionObserver(
+              ([e]) => {
+                if (e.intersectionRatio >= 0.2) video.play().catch(() => {});
+                else video.pause();
+              },
+              { threshold: [0, 0.2] },
+            ).observe(video);
+          }
           if (now >= BLACK_FRIDAY_WEEK) {
+            document.getElementById('founders-kicker').textContent =
+              'Black Friday · Ends Cyber Monday';
             document.getElementById('founding-kicker').textContent = 'Black Friday';
             document.getElementById('founding-line').textContent =
               'Book 21 Pro, free for good, for everyone who installs by Cyber Monday.';
@@ -506,6 +567,7 @@
             if (left <= 0) {
               banner.hidden = true;
               document.getElementById('founding-note').hidden = true;
+              founders.hidden = true;
               return;
             }
             const days = Math.floor(left / 86400000);
@@ -516,6 +578,8 @@
                 : hours >= 2
                   ? `Ends in ${hours} hours`
                   : 'Ends tonight';
+            document.getElementById('founders-count').textContent =
+              days >= 2 ? `${days} days left` : hours >= 2 ? `${hours} hours left` : 'Last day';
           };
           tick();
           setInterval(tick, 60000);
