@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Book 21 · Blackjack Coach</title>
+    <title>Book 21: Blackjack Coach · Basic strategy trainer</title>
     <meta
       name="description"
-      content="Learn to play blackjack by the book. Real hands at a real table, a coach on every decision, and drills that stick. Free to start."
+      content="Learn blackjack basic strategy at a real table. A coach grades every decision for your table's exact rules and tells you why. Free to start, and it works offline."
     />
     <meta property="og:title" content="Book 21 · Blackjack Coach" />
     <meta
@@ -26,6 +26,26 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#01120B" />
     <link rel="icon" href="/img/icon.png" />
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+    <link rel="canonical" href="https://book21.app/" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "MobileApplication",
+        "name": "Book 21: Blackjack Coach",
+        "operatingSystem": "iOS 18 or later",
+        "applicationCategory": "EducationalApplication",
+        "description": "Learn blackjack basic strategy at a realistic table. A coach grades every decision for your table's exact rules and explains why. Works offline, with no ads and no real money.",
+        "url": "https://book21.app/",
+        "image": "https://book21.app/img/og.png",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Pixel Flip Studio LLC",
+          "url": "https://pixelflipstudio.com/"
+        }
+      }
+    </script>
     <link rel="stylesheet" href="/style.css" />
     <script>
       // Anonymous visit counts (PostHog, cookie-free; see the privacy policy). Page views and store
@@ -186,7 +206,7 @@
               <span><small>Get it on</small>Google Play</span>
             </a>
           </div>
-          <p class="soon">
+          <p class="soon" id="store-note">
             Coming soon to iPhone and Android. Free to start, and never real money.
           </p>
         </div>
@@ -535,6 +555,11 @@
               el.removeAttribute('aria-disabled');
               el.setAttribute('aria-label', 'Download on the App Store');
             }
+            // The line under the buttons stops saying "coming soon" for iPhone.
+            const note = document.getElementById('store-note');
+            if (note)
+              note.textContent =
+                'On iPhone now, with Android on the way. Free to start, and never real money.';
           }
           // The founding offer shows only once the app is live (or in the preview), inside the window.
           if ((cfg.launched !== true && !preview) || !(now >= start && now <= end)) return;
