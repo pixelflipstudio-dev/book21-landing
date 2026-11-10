@@ -107,15 +107,57 @@
         <a class="top-link" href="#get">Get the app</a>
       </nav>
 
+      <!-- The founders' table (S1 step 1d, D-130): leads the page in the founding window, once the
+           app is live (Paul, 2026-11-09). -->
+      <section class="founders" id="founders" hidden aria-labelledby="founders-title">
+        <div class="founders-copy">
+          <p class="founders-kicker" id="founders-kicker">Founding month · Ends Cyber Monday</p>
+          <h2 id="founders-title">Pull up a chair at the founders’ table</h2>
+          <p>
+            Book 21 is a blackjack coach that grades every decision by the book. Download it by
+            November 30 and you’re a founding player. Pro is yours for good, with the gold chip to
+            prove it.
+          </p>
+          <div
+            class="countdown"
+            id="countdown"
+            role="timer"
+            aria-label="Time left in the founding month"
+          >
+            <span class="cd-unit"><b id="cd-d">0</b>days</span>
+            <span class="cd-unit"><b id="cd-h">00</b>hours</span>
+            <span class="cd-unit"><b id="cd-m">00</b>min</span>
+            <span class="cd-unit"><b id="cd-s">00</b>sec</span>
+          </div>
+          <p class="cd-ends">Ends at midnight Eastern on Cyber Monday, November 30.</p>
+          <div class="founders-row" id="founders-row"></div>
+        </div>
+        <div class="founders-art">
+          <!-- The app's own founding moment, recorded on an iPhone (S1 step 1d). -->
+          <figure
+            class="phone founders-phone"
+            role="img"
+            aria-label="Book 21 on an iPhone: the velvet rope opens, 21 cards turn gold around the gold founders’ chip, and the screen says Welcome to the founders’ table"
+          >
+            <div class="screen">
+              <video
+                id="founders-video"
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster="/img/founders-table.webp"
+                aria-hidden="true"
+              >
+                <source src="/img/founders-table.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </figure>
+        </div>
+      </section>
+
       <div class="hero-grid">
         <div class="hero-copy">
-          <p class="founding" id="founding-banner" hidden>
-            <span class="founding-kicker" id="founding-kicker">Founding month</span>
-            <span id="founding-line"
-              >Install by Cyber Monday and Book 21 Pro is yours, free for good.</span
-            >
-            <span class="founding-count" id="founding-count"></span>
-          </p>
           <p class="eyebrow">Blackjack coach</p>
           <h1>Walk up to the table knowing the right play.</h1>
           <p class="lede">
@@ -221,43 +263,6 @@
     </header>
 
     <main>
-      <!-- The founders' table (S1 step 1d, D-130): shown with the founding banner, in the window. -->
-      <section class="founders" id="founders" hidden aria-labelledby="founders-title">
-        <div class="founders-copy">
-          <p class="founders-kicker" id="founders-kicker">Founding month · Ends Cyber Monday</p>
-          <h2 id="founders-title">Pull up a chair at the founders’ table</h2>
-          <p>
-            Download Book 21 by November 30 and you’re a founding player. Pro is yours for good,
-            with the gold chip to prove it.
-          </p>
-          <div class="founders-row" id="founders-row">
-            <span class="founders-count" id="founders-count"></span>
-          </div>
-        </div>
-        <div class="founders-art">
-          <!-- The app's own founding moment, recorded on an iPhone (S1 step 1d). -->
-          <figure
-            class="phone founders-phone"
-            role="img"
-            aria-label="Book 21 on an iPhone: the velvet rope opens, 21 cards turn gold around the gold founders’ chip, and the screen says Welcome to the founders’ table"
-          >
-            <div class="screen">
-              <video
-                id="founders-video"
-                muted
-                loop
-                playsinline
-                preload="none"
-                poster="/img/founders-table.webp"
-                aria-hidden="true"
-              >
-                <source src="/img/founders-table.mp4" type="video/mp4" />
-              </video>
-            </div>
-          </figure>
-        </div>
-      </section>
-
       <section class="reveal promise">
         <p class="mono">The book</p>
         <h2>Every hand has a right play. Most people at the table don't know it.</h2>
@@ -533,8 +538,6 @@
           }
           // The founding offer shows only once the app is live (or in the preview), inside the window.
           if ((cfg.launched !== true && !preview) || !(now >= start && now <= end)) return;
-          const banner = document.getElementById('founding-banner');
-          banner.hidden = false;
           document.getElementById('founding-note').hidden = false;
           // The founders' table section: the App Store button cloned from the hero, then the moment,
           // which plays while it's on screen. Reduced motion (and Low Power Mode, which refuses to
@@ -561,32 +564,39 @@
           if (now >= BLACK_FRIDAY_WEEK) {
             document.getElementById('founders-kicker').textContent =
               'Black Friday · Ends Cyber Monday';
-            document.getElementById('founding-kicker').textContent = 'Black Friday';
-            document.getElementById('founding-line').textContent =
-              'Book 21 Pro, free for good, for everyone who installs by Cyber Monday.';
           }
-          const count = document.getElementById('founding-count');
+          // The countdown to the window's end, the moment the app stops making founders. Screen
+          // readers get its label, updated each minute, not every second.
+          const timer = document.getElementById('countdown');
+          const digits = ['d', 'h', 'm', 's'].map((u) => document.getElementById(`cd-${u}`));
+          let every = 0;
+          let minute = -1;
           const tick = () => {
             const left = end - clock();
             if (left <= 0) {
-              banner.hidden = true;
               document.getElementById('founding-note').hidden = true;
               founders.hidden = true;
+              clearInterval(every);
               return;
             }
-            const days = Math.floor(left / 86400000);
-            const hours = Math.floor(left / 3600000);
-            count.textContent =
-              days >= 2
-                ? `Ends in ${days} days`
-                : hours >= 2
-                  ? `Ends in ${hours} hours`
-                  : 'Ends tonight';
-            document.getElementById('founders-count').textContent =
-              days >= 2 ? `${days} days left` : hours >= 2 ? `${hours} hours left` : 'Last day';
+            const secs = Math.floor(left / 1000);
+            const d = Math.floor(secs / 86400);
+            const h = Math.floor(secs / 3600) % 24;
+            const m = Math.floor(secs / 60) % 60;
+            const parts = [d, h, m, secs % 60];
+            parts.forEach((n, i) => {
+              digits[i].textContent = i === 0 ? String(n) : String(n).padStart(2, '0');
+            });
+            if (m !== minute) {
+              minute = m;
+              timer.setAttribute(
+                'aria-label',
+                `${d} days, ${h} hours and ${m} minutes left in the founding month`,
+              );
+            }
           };
           tick();
-          setInterval(tick, 60000);
+          every = setInterval(tick, 1000);
         };
         fetch('/config.json', { cache: 'no-store' })
           .then((r) => (r.ok ? r.json() : BUILT_IN))
